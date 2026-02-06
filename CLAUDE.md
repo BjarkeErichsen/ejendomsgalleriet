@@ -7,7 +7,7 @@
 ### Core Principles
 - Danish-language UI throughout (all labels, navigation, and content in Danish)
 - Scandinavian minimalist aesthetic: clean, white-dominant, spacious layout
-- Green primary accent color (similar to ejendomstorvet.dk)
+- Blue primary accent color (unlike ejendomstorvet.dk)
 - Mobile-responsive design
 - All buttons and interactions must be fully functional
 
