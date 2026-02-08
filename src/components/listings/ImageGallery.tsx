@@ -121,7 +121,8 @@ export function ImageGallery({ images, className }: ImageGalleryProps) {
             alt={`Billede ${activeIndex + 1} af ${total}`}
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 60vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 800px"
+            quality={100}
             priority
           />
 
@@ -215,6 +216,8 @@ export function ImageGallery({ images, className }: ImageGalleryProps) {
               fill
               className="object-contain"
               sizes="90vw"
+              quality={100}
+              unoptimized
               priority
             />
           </div>

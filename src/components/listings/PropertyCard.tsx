@@ -48,7 +48,8 @@ export function PropertyCard({ listing, className }: PropertyCardProps) {
             alt={listing.title ?? address}
             fill
             className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+            quality={90}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-gray-400 text-sm">

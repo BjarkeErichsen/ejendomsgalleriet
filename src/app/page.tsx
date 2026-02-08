@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { getUsageLabel, getListingPrice, getListingPriceLabel, formatArea } from '@/lib/utils'
 import { Badge } from '@/components/ui/Badge'
+import { SearchBarWithAutocomplete } from '@/components/search/SearchBarWithAutocomplete'
 import type { Listing } from '@/lib/types'
 
 export default async function HomePage() {
@@ -27,52 +28,9 @@ export default async function HomePage() {
           <p className="text-lg md:text-xl text-green-100 mb-10 max-w-2xl mx-auto">
             S&oslash;g blandt tusindvis af erhvervslokaler til leje, salg og investering i hele Danmark
           </p>
-          <form action="/soeg" method="GET" className="max-w-2xl mx-auto">
-            <div className="flex items-stretch rounded-lg shadow-xl overflow-hidden">
-              <div className="relative flex-1">
-                <svg
-                  className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  name="q"
-                  placeholder="S&oslash;g p&aring; adresse, by eller postnummer..."
-                  className="w-full h-full pl-12 pr-4 py-4 text-lg text-gray-900 placeholder-gray-400 border-none focus:outline-none focus:ring-0 bg-white"
-                />
-              </div>
-              <button
-                type="submit"
-                className="flex items-center gap-2 bg-green-700 text-white px-8 py-4 text-lg font-medium hover:bg-green-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-              >
-                <svg
-                  className="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  />
-                </svg>
-                <span className="hidden sm:inline">S&oslash;g</span>
-              </button>
-            </div>
-          </form>
+          <div className="max-w-2xl mx-auto">
+            <SearchBarWithAutocomplete hero />
+          </div>
         </div>
       </section>
 
@@ -185,7 +143,8 @@ export default async function HomePage() {
                           alt={listing.title || listing.address_street}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                          quality={90}
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-gray-200">

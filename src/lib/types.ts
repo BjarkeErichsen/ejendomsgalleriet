@@ -113,6 +113,9 @@ export interface ListingFormData {
   address_street: string
   address_postal_code: string
   address_city: string
+  address_region: string
+  address_latitude: number | null
+  address_longitude: number | null
   primary_usage: string
   transaction_type: 'leje' | 'salg'
   monthly_rent_dkk: string

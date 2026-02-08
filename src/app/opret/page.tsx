@@ -8,8 +8,11 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { FileUpload } from '@/components/ui/FileUpload'
-import { PRIMARY_USAGE_TYPES, FACILITIES, ENERGY_LABELS, REGIONS } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+import { AddressAutocomplete } from '@/components/ui/AddressAutocomplete'
+import { PRIMARY_USAGE_TYPES, FACILITIES, ENERGY_LABELS } from '@/lib/constants'
+import { cn, getRegionLabel } from '@/lib/utils'
+import { postalCodeToRegion } from '@/lib/dawa'
+import type { ParsedAddress } from '@/lib/dawa'
 import type { ListingFormData } from '@/lib/types'
 
 const STEPS = [
@@ -29,6 +32,9 @@ const initialFormData: ListingFormData = {
   address_street: '',
   address_postal_code: '',
   address_city: '',
+  address_region: '',
+  address_latitude: null,
+  address_longitude: null,
   primary_usage: '',
   transaction_type: 'leje',
   monthly_rent_dkk: '',
@@ -70,6 +76,21 @@ const initialFormData: ListingFormData = {
   contact_company: '',
 }
 
+/**
+ * Auto-calculate paired monthly/yearly fields.
+ * When user changes monthly, suggest yearly = monthly * 12.
+ * When user changes yearly, suggest monthly = yearly / 12.
+ */
+function autoCalcMonthlyYearly(
+  value: string,
+  direction: 'monthToYear' | 'yearToMonth'
+): string {
+  const num = parseInt(value, 10)
+  if (!num || isNaN(num)) return ''
+  if (direction === 'monthToYear') return String(num * 12)
+  return String(Math.round(num / 12))
+}
+
 export default function OpretPage() {
   const { user, loading: authLoading } = useAuth()
   const router = useRouter()
@@ -85,6 +106,56 @@ export default function OpretPage() {
 
   const updateField = useCallback(<K extends keyof ListingFormData>(field: K, value: ListingFormData[K]) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+  }, [])
+
+  // Auto-calculate paired fields (monthly <-> yearly)
+  const handleMonthlyChange = useCallback((monthlyField: keyof ListingFormData, yearlyField: keyof ListingFormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [monthlyField]: value,
+      [yearlyField]: autoCalcMonthlyYearly(value, 'monthToYear'),
+    }))
+  }, [])
+
+  const handleYearlyChange = useCallback((monthlyField: keyof ListingFormData, yearlyField: keyof ListingFormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [yearlyField]: value,
+      [monthlyField]: autoCalcMonthlyYearly(value, 'yearToMonth'),
+    }))
+  }, [])
+
+  // Auto-calculate price per m² when sale price or area changes
+  const handleSalePriceChange = useCallback((value: string) => {
+    setFormData(prev => {
+      const price = parseInt(value, 10)
+      const area = parseInt(prev.primary_area_m2, 10)
+      const pricePerM2 = price && area ? String(Math.round(price / area)) : prev.price_per_m2_dkk
+      return { ...prev, sale_price_dkk: value, price_per_m2_dkk: pricePerM2 }
+    })
+  }, [])
+
+  // Handle address selection from DAWA autocomplete
+  const handleAddressSelect = useCallback((address: ParsedAddress) => {
+    setFormData(prev => ({
+      ...prev,
+      address_street: address.street,
+      address_postal_code: address.postalCode,
+      address_city: address.city,
+      address_region: address.region,
+      address_latitude: address.latitude,
+      address_longitude: address.longitude,
+    }))
+  }, [])
+
+  // Handle manual postal code change -> auto-detect region
+  const handlePostalCodeChange = useCallback((value: string) => {
+    const region = postalCodeToRegion(value)
+    setFormData(prev => ({
+      ...prev,
+      address_postal_code: value,
+      address_region: region || prev.address_region,
+    }))
   }, [])
 
   const toggleFacility = useCallback((facility: string) => {
@@ -158,9 +229,9 @@ export default function OpretPage() {
         address_street: formData.address_street,
         address_postal_code: formData.address_postal_code,
         address_city: formData.address_city,
-        region: REGIONS.find(r =>
-          formData.address_city.toLowerCase().includes('københavn') ? r.value === 'byen_koebenhavn' : false
-        )?.value || '',
+        region: formData.address_region || postalCodeToRegion(formData.address_postal_code) || '',
+        latitude: formData.address_latitude,
+        longitude: formData.address_longitude,
         primary_area_m2: toInt(formData.primary_area_m2),
         secondary_area_m2: toInt(formData.secondary_area_m2),
         plot_area_m2: toInt(formData.plot_area_m2),
@@ -295,11 +366,13 @@ export default function OpretPage() {
             {currentStep === 0 && (
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-gray-900">Adresse</h2>
-                <Input
-                  label="Vejnavn"
-                  placeholder="Skriv og vælg adresse fra listen"
+                <p className="text-sm text-gray-500">Søg efter en adresse og vælg fra listen. Postnummer, by og region udfyldes automatisk.</p>
+                <AddressAutocomplete
+                  label="Adresse"
+                  placeholder="Skriv adresse, f.eks. Vestergade 12, København"
                   value={formData.address_street}
-                  onChange={(e) => updateField('address_street', e.target.value)}
+                  onChange={(value) => updateField('address_street', value)}
+                  onAddressSelect={handleAddressSelect}
                   required
                 />
                 <div className="grid grid-cols-2 gap-4">
@@ -307,7 +380,7 @@ export default function OpretPage() {
                     label="Postnummer"
                     placeholder="F.eks. 2100"
                     value={formData.address_postal_code}
-                    onChange={(e) => updateField('address_postal_code', e.target.value)}
+                    onChange={(e) => handlePostalCodeChange(e.target.value)}
                     required
                   />
                   <Input
@@ -318,6 +391,21 @@ export default function OpretPage() {
                     required
                   />
                 </div>
+                {formData.address_region && (
+                  <div className="flex items-center gap-2 px-3 py-2 bg-green-50 rounded-md border border-green-200">
+                    <svg className="w-4 h-4 text-green-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-sm text-green-800">
+                      Region: <strong>{getRegionLabel(formData.address_region)}</strong>
+                    </span>
+                  </div>
+                )}
+                {formData.address_latitude && formData.address_longitude && (
+                  <p className="text-xs text-gray-400">
+                    Koordinater: {formData.address_latitude.toFixed(4)}, {formData.address_longitude.toFixed(4)}
+                  </p>
+                )}
               </div>
             )}
 
@@ -367,28 +455,84 @@ export default function OpretPage() {
 
                 {formData.transaction_type === 'leje' ? (
                   <div className="space-y-4">
+                    <p className="text-xs text-gray-500">Månedlige og årlige beløb beregnes automatisk når du udfylder ét felt.</p>
                     <div className="grid grid-cols-2 gap-4">
-                      <Input label="Leje pr. md." suffix="DKK" value={formData.monthly_rent_dkk} onChange={(e) => updateField('monthly_rent_dkk', e.target.value)} type="number" placeholder="Pris" />
-                      <Input label="Leje pr. år" suffix="DKK" value={formData.annual_rent_dkk} onChange={(e) => updateField('annual_rent_dkk', e.target.value)} type="number" placeholder="Pris" />
+                      <Input
+                        label="Leje pr. md."
+                        suffix="DKK"
+                        value={formData.monthly_rent_dkk}
+                        onChange={(e) => handleMonthlyChange('monthly_rent_dkk', 'annual_rent_dkk', e.target.value)}
+                        type="number"
+                        placeholder="Pris"
+                      />
+                      <Input
+                        label="Leje pr. år"
+                        suffix="DKK"
+                        value={formData.annual_rent_dkk}
+                        onChange={(e) => handleYearlyChange('monthly_rent_dkk', 'annual_rent_dkk', e.target.value)}
+                        type="number"
+                        placeholder="Pris"
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <Input label="Depositum" suffix="måneder" value={formData.deposit_months} onChange={(e) => updateField('deposit_months', e.target.value)} type="number" placeholder="0" />
                       <Input label="Depositum" suffix="DKK" value={formData.deposit_dkk} onChange={(e) => updateField('deposit_dkk', e.target.value)} type="number" placeholder="Pris" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <Input label="Driftsomkostninger pr. md." suffix="DKK" value={formData.operating_costs_monthly} onChange={(e) => updateField('operating_costs_monthly', e.target.value)} type="number" placeholder="0" />
-                      <Input label="Driftsomkostninger pr. år" suffix="DKK" value={formData.operating_costs_annual} onChange={(e) => updateField('operating_costs_annual', e.target.value)} type="number" placeholder="0" />
+                      <Input
+                        label="Driftsomkostninger pr. md."
+                        suffix="DKK"
+                        value={formData.operating_costs_monthly}
+                        onChange={(e) => handleMonthlyChange('operating_costs_monthly', 'operating_costs_annual', e.target.value)}
+                        type="number"
+                        placeholder="0"
+                      />
+                      <Input
+                        label="Driftsomkostninger pr. år"
+                        suffix="DKK"
+                        value={formData.operating_costs_annual}
+                        onChange={(e) => handleYearlyChange('operating_costs_monthly', 'operating_costs_annual', e.target.value)}
+                        type="number"
+                        placeholder="0"
+                      />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <Input label="Aconto forbrug pr. md." suffix="DKK" value={formData.prepaid_consumption_monthly} onChange={(e) => updateField('prepaid_consumption_monthly', e.target.value)} type="number" placeholder="0" />
-                      <Input label="Aconto forbrug pr. år" suffix="DKK" value={formData.prepaid_consumption_annual} onChange={(e) => updateField('prepaid_consumption_annual', e.target.value)} type="number" placeholder="0" />
+                      <Input
+                        label="Aconto forbrug pr. md."
+                        suffix="DKK"
+                        value={formData.prepaid_consumption_monthly}
+                        onChange={(e) => handleMonthlyChange('prepaid_consumption_monthly', 'prepaid_consumption_annual', e.target.value)}
+                        type="number"
+                        placeholder="0"
+                      />
+                      <Input
+                        label="Aconto forbrug pr. år"
+                        suffix="DKK"
+                        value={formData.prepaid_consumption_annual}
+                        onChange={(e) => handleYearlyChange('prepaid_consumption_monthly', 'prepaid_consumption_annual', e.target.value)}
+                        type="number"
+                        placeholder="0"
+                      />
                     </div>
                     <Input label="Evt. afståelsesbeløb" suffix="DKK" value={formData.transfer_fee_dkk} onChange={(e) => updateField('transfer_fee_dkk', e.target.value)} type="number" placeholder="0" />
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <Input label="Pris" suffix="DKK" value={formData.sale_price_dkk} onChange={(e) => updateField('sale_price_dkk', e.target.value)} type="number" placeholder="Pris" required />
-                    <Input label="Pris pr. m²" suffix="DKK" value={formData.price_per_m2_dkk} onChange={(e) => updateField('price_per_m2_dkk', e.target.value)} type="number" placeholder="Pris" />
+                    <Input
+                      label="Pris"
+                      suffix="DKK"
+                      value={formData.sale_price_dkk}
+                      onChange={(e) => handleSalePriceChange(e.target.value)}
+                      type="number"
+                      placeholder="Pris"
+                      required
+                    />
+                    <Input label="Pris pr. m²" suffix="DKK" value={formData.price_per_m2_dkk} onChange={(e) => updateField('price_per_m2_dkk', e.target.value)} type="number" placeholder="Beregnes automatisk" />
+                    {formData.sale_price_dkk && formData.primary_area_m2 && (
+                      <p className="text-xs text-gray-500">
+                        Beregnet: {Math.round(parseInt(formData.sale_price_dkk) / parseInt(formData.primary_area_m2)).toLocaleString('da-DK')} DKK pr. m²
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
@@ -416,6 +560,29 @@ export default function OpretPage() {
                   accept="image/jpeg,image/png,image/jpg"
                   helpText="Maks filstørrelse 20MB. Understøtter jpg, jpeg og png."
                 />
+                {photos.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {photos.map((file, i) => (
+                      <div key={i} className="relative group">
+                        <div className="w-20 h-20 rounded-md overflow-hidden bg-gray-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={URL.createObjectURL(file)}
+                            alt={file.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setPhotos(prev => prev.filter((_, idx) => idx !== i))}
+                          className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <FileUpload
                   label="Plantegninger"
                   onFilesSelected={(files) => setFloorplans(prev => [...prev, ...files])}

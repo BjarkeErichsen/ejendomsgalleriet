@@ -7,6 +7,7 @@ import { Tabs } from '@/components/ui/Tabs'
 import { FilterPanel } from '@/components/search/FilterPanel'
 import { FilterChips } from '@/components/search/FilterChips'
 import { SortDropdown } from '@/components/search/SortDropdown'
+import { SearchBarWithAutocomplete } from '@/components/search/SearchBarWithAutocomplete'
 import { PropertyGrid } from '@/components/listings/PropertyGrid'
 import { TRANSACTION_TYPES, ITEMS_PER_PAGE } from '@/lib/constants'
 
@@ -31,6 +32,14 @@ function SearchPageContent() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Search bar */}
+      <div className="mb-6">
+        <SearchBarWithAutocomplete
+          initialQuery={filters.query || ''}
+          onSearch={(q) => setFilters({ query: q || undefined })}
+        />
+      </div>
+
       {/* Transaction type tabs */}
       <Tabs
         tabs={transactionTabs}
