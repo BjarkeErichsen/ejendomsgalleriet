@@ -1,10 +1,16 @@
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
 import { ImageGallery } from '@/components/listings/ImageGallery'
 import { Badge } from '@/components/ui/Badge'
 import { formatCurrency, formatArea, formatYield, getUsageLabel, getEnergyLabelColor, getListingPrice, getListingPriceLabel } from '@/lib/utils'
 import { FACILITIES } from '@/lib/constants'
 import type { Listing } from '@/lib/types'
+
+const PropertyMap = dynamic(
+  () => import('@/components/listings/PropertyMap').then(mod => ({ default: mod.PropertyMap })),
+  { ssr: false, loading: () => <div className="bg-gray-100 rounded-lg h-64 animate-pulse" /> }
+)
 
 export default async function PropertyDetailPage({ params }: { params: { id: string } }) {
   const supabase = createServerSupabaseClient()
@@ -204,18 +210,26 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
             </div>
           )}
 
-          {/* Map placeholder */}
+          {/* Map */}
           <div>
             <h2 className="text-lg font-semibold text-gray-900 mb-3">Kort</h2>
-            <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500">
-              <div className="text-center">
-                <svg className="w-10 h-10 mx-auto mb-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <p>{l.address_street}, {l.address_postal_code} {l.address_city}</p>
+            {l.latitude && l.longitude ? (
+              <PropertyMap
+                latitude={l.latitude}
+                longitude={l.longitude}
+                address={`${l.address_street}, ${l.address_postal_code} ${l.address_city}`}
+              />
+            ) : (
+              <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500">
+                <div className="text-center">
+                  <svg className="w-10 h-10 mx-auto mb-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <p>{l.address_street}, {l.address_postal_code} {l.address_city}</p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Video */}

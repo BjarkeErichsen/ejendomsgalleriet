@@ -7,8 +7,11 @@ import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
-import { PRIMARY_USAGE_TYPES, FACILITIES, ENERGY_LABELS, REGIONS } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+import { AddressAutocomplete } from '@/components/ui/AddressAutocomplete'
+import { PRIMARY_USAGE_TYPES } from '@/lib/constants'
+import { cn, getRegionLabel } from '@/lib/utils'
+import { postalCodeToRegion } from '@/lib/dawa'
+import type { ParsedAddress } from '@/lib/dawa'
 import type { Listing } from '@/lib/types'
 
 export default function EditListingPage() {
@@ -57,6 +60,9 @@ export default function EditListingPage() {
         address_street: listing.address_street,
         address_postal_code: listing.address_postal_code,
         address_city: listing.address_city,
+        region: listing.region || postalCodeToRegion(listing.address_postal_code),
+        latitude: listing.latitude,
+        longitude: listing.longitude,
         primary_usage: listing.primary_usage,
         transaction_type: listing.transaction_type,
         primary_area_m2: listing.primary_area_m2,
@@ -118,11 +124,35 @@ export default function EditListingPage() {
       <div className="space-y-8 bg-white border border-gray-200 rounded-lg p-6">
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">Adresse</h2>
-          <Input label="Vejnavn" value={listing.address_street} onChange={(e) => updateListing({ address_street: e.target.value })} />
+          <AddressAutocomplete
+            label="Adresse"
+            value={listing.address_street}
+            onChange={(value) => updateListing({ address_street: value })}
+            onAddressSelect={(address: ParsedAddress) => {
+              updateListing({
+                address_street: address.street,
+                address_postal_code: address.postalCode,
+                address_city: address.city,
+                region: address.region,
+                latitude: address.latitude,
+                longitude: address.longitude,
+              })
+            }}
+          />
           <div className="grid grid-cols-2 gap-4">
-            <Input label="Postnummer" value={listing.address_postal_code} onChange={(e) => updateListing({ address_postal_code: e.target.value })} />
+            <Input
+              label="Postnummer"
+              value={listing.address_postal_code}
+              onChange={(e) => {
+                const region = postalCodeToRegion(e.target.value)
+                updateListing({ address_postal_code: e.target.value, region: region || listing.region })
+              }}
+            />
             <Input label="By" value={listing.address_city} onChange={(e) => updateListing({ address_city: e.target.value })} />
           </div>
+          {listing.region && (
+            <p className="text-sm text-green-700">Region: <strong>{getRegionLabel(listing.region)}</strong></p>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -151,13 +181,44 @@ export default function EditListingPage() {
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">Pris</h2>
           {listing.transaction_type === 'leje' || listing.transaction_type === 'investering' ? (
-            <div className="grid grid-cols-2 gap-4">
-              <Input label="Månedlig leje" suffix="DKK" type="number" value={listing.monthly_rent_dkk || ''} onChange={(e) => updateListing({ monthly_rent_dkk: Number(e.target.value) || null })} />
-              <Input label="Årlig leje" suffix="DKK" type="number" value={listing.annual_rent_dkk || ''} onChange={(e) => updateListing({ annual_rent_dkk: Number(e.target.value) || null })} />
-            </div>
+            <>
+              <p className="text-xs text-gray-500">Månedlige og årlige beløb beregnes automatisk.</p>
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label="Månedlig leje"
+                  suffix="DKK"
+                  type="number"
+                  value={listing.monthly_rent_dkk || ''}
+                  onChange={(e) => {
+                    const monthly = Number(e.target.value) || null
+                    updateListing({ monthly_rent_dkk: monthly, annual_rent_dkk: monthly ? monthly * 12 : listing.annual_rent_dkk })
+                  }}
+                />
+                <Input
+                  label="Årlig leje"
+                  suffix="DKK"
+                  type="number"
+                  value={listing.annual_rent_dkk || ''}
+                  onChange={(e) => {
+                    const annual = Number(e.target.value) || null
+                    updateListing({ annual_rent_dkk: annual, monthly_rent_dkk: annual ? Math.round(annual / 12) : listing.monthly_rent_dkk })
+                  }}
+                />
+              </div>
+            </>
           ) : (
             <div className="grid grid-cols-2 gap-4">
-              <Input label="Pris" suffix="DKK" type="number" value={listing.sale_price_dkk || ''} onChange={(e) => updateListing({ sale_price_dkk: Number(e.target.value) || null })} />
+              <Input
+                label="Pris"
+                suffix="DKK"
+                type="number"
+                value={listing.sale_price_dkk || ''}
+                onChange={(e) => {
+                  const price = Number(e.target.value) || null
+                  const pricePerM2 = price && listing.primary_area_m2 ? Math.round(price / listing.primary_area_m2) : listing.price_per_m2_dkk
+                  updateListing({ sale_price_dkk: price, price_per_m2_dkk: pricePerM2 })
+                }}
+              />
               <Input label="Pris pr. m²" suffix="DKK" type="number" value={listing.price_per_m2_dkk || ''} onChange={(e) => updateListing({ price_per_m2_dkk: Number(e.target.value) || null })} />
             </div>
           )}
