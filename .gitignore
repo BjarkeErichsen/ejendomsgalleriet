@@ -29,3 +29,4 @@ next-env.d.ts
 
 # temp scripts
 take-screenshots.js
+.env.local
