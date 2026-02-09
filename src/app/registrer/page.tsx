@@ -28,7 +28,7 @@ export default function RegisterPage() {
     }
 
     if (password.length < 6) {
-      setError('Adgangskoden skal v\u00e6re mindst 6 tegn')
+      setError('Adgangskoden skal være mindst 6 tegn')
       return
     }
 
@@ -62,7 +62,7 @@ export default function RegisterPage() {
             Opret konto
           </h1>
           <p className="text-sm text-gray-500 text-center mb-8">
-            Opret en konto for at l&aelig;gge ejendomme op p&aring; platformen
+            Opret en konto for at lægge ejendomme op på platformen
           </p>
 
           {error && (
@@ -99,7 +99,7 @@ export default function RegisterPage() {
               required
             />
             <Input
-              label="Bekr\u00e6ft adgangskode"
+              label="Bekræft adgangskode"
               type="password"
               name="confirmPassword"
               placeholder="Gentag adgangskode"
