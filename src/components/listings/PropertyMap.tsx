@@ -8,9 +8,13 @@ interface PropertyMapProps {
   longitude: number
   address?: string
   className?: string
+  /** Label above price, e.g. "Leje" or "Salg" */
+  priceLabel?: string
+  /** Formatted price text, e.g. "180.800 DKK" */
+  priceText?: string
 }
 
-export function PropertyMap({ latitude, longitude, address, className }: PropertyMapProps) {
+export function PropertyMap({ latitude, longitude, address, className, priceLabel, priceText }: PropertyMapProps) {
   const mapRef = useRef<HTMLDivElement>(null)
   const mapInstanceRef = useRef<L.Map | null>(null)
 
@@ -36,9 +40,49 @@ export function PropertyMap({ latitude, longitude, address, className }: Propert
         maxZoom: 19,
       }).addTo(map)
 
-      const marker = L.marker([latitude, longitude]).addTo(map)
-      if (address) {
-        marker.bindPopup(`<strong>${address}</strong>`).openPopup()
+      if (priceLabel && priceText) {
+        // Custom price marker (like ejendomstorvet.dk)
+        const priceIcon = L.divIcon({
+          className: '',
+          html: `
+            <div style="
+              background: #F59E0B;
+              color: #000;
+              padding: 6px 12px;
+              border-radius: 6px;
+              font-weight: 700;
+              font-size: 13px;
+              white-space: nowrap;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+              text-align: center;
+              line-height: 1.3;
+              position: relative;
+            ">
+              <div style="font-size:11px;font-weight:600;opacity:0.8">${priceLabel}</div>
+              <div>${priceText}</div>
+              <div style="
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 0;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #F59E0B;
+              "></div>
+            </div>
+          `,
+          iconSize: [0, 0],
+          iconAnchor: [0, 50],
+        })
+        L.marker([latitude, longitude], { icon: priceIcon }).addTo(map)
+      } else {
+        // Default pin marker
+        const marker = L.marker([latitude, longitude]).addTo(map)
+        if (address) {
+          marker.bindPopup(`<strong>${address}</strong>`).openPopup()
+        }
       }
 
       mapInstanceRef.current = map
@@ -53,7 +97,7 @@ export function PropertyMap({ latitude, longitude, address, className }: Propert
         mapInstanceRef.current = null
       }
     }
-  }, [latitude, longitude, address])
+  }, [latitude, longitude, address, priceLabel, priceText])
 
   return (
     <>
@@ -66,7 +110,7 @@ export function PropertyMap({ latitude, longitude, address, className }: Propert
       <div
         ref={mapRef}
         className={cn('rounded-lg overflow-hidden', className)}
-        style={{ height: '256px', width: '100%' }}
+        style={{ height: '300px', width: '100%' }}
       />
     </>
   )

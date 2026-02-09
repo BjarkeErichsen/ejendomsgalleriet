@@ -117,7 +117,7 @@ export interface ListingFormData {
   address_latitude: number | null
   address_longitude: number | null
   primary_usage: string
-  transaction_type: 'leje' | 'salg'
+  transaction_type: 'leje' | 'salg' | 'investering'
   monthly_rent_dkk: string
   annual_rent_dkk: string
   deposit_months: string
@@ -129,6 +129,11 @@ export interface ListingFormData {
   transfer_fee_dkk: string
   sale_price_dkk: string
   price_per_m2_dkk: string
+  yield_percent: string
+  annual_rental_income: string
+  annual_rental_income_per_m2: string
+  annual_operating_costs: string
+  annual_operating_costs_per_m2: string
   primary_area_m2: string
   secondary_area_m2: string
   plot_area_m2: string

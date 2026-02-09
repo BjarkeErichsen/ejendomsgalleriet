@@ -218,6 +218,8 @@ export default async function PropertyDetailPage({ params }: { params: { id: str
                 latitude={l.latitude}
                 longitude={l.longitude}
                 address={`${l.address_street}, ${l.address_postal_code} ${l.address_city}`}
+                priceLabel={getListingPriceLabel(l)}
+                priceText={getListingPrice(l)}
               />
             ) : (
               <div className="bg-gray-100 rounded-lg h-64 flex items-center justify-center text-gray-500">

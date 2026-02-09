@@ -105,7 +105,7 @@ function SearchPageContent() {
               </button>
               <p className="text-sm text-gray-600">
                 {loading ? (
-                  'S\u00f8ger...'
+                  'Søger...'
                 ) : (
                   <>
                     <span className="font-semibold text-gray-900">{count}</span>{' '}
@@ -167,7 +167,7 @@ function SearchPageContent() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
                 <p className="text-sm font-medium">Kortvisning</p>
-                <p className="text-xs mt-1">Kortet vises her, n&aring;r det er tilg&aelig;ngeligt</p>
+                <p className="text-xs mt-1">Kortet vises her, når det er tilgængeligt</p>
               </div>
             </div>
           )}
@@ -217,7 +217,7 @@ function SearchPageContent() {
                 disabled={currentPage >= totalPages}
                 className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                N&aelig;ste
+                Næste
               </button>
             </nav>
           )}

@@ -23,10 +23,10 @@ export default async function HomePage() {
       <section className="bg-gradient-to-br from-green-800 to-green-600 py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-            Find din n&aelig;ste erhvervsejendom
+            Find din næste erhvervsejendom
           </h1>
           <p className="text-lg md:text-xl text-green-100 mb-10 max-w-2xl mx-auto">
-            S&oslash;g blandt tusindvis af erhvervslokaler til leje, salg og investering i hele Danmark
+            Søg blandt tusindvis af erhvervslokaler til leje, salg og investering i hele Danmark
           </p>
           <div className="max-w-2xl mx-auto">
             <SearchBarWithAutocomplete hero />
@@ -58,7 +58,7 @@ export default async function HomePage() {
                 Find erhvervslokaler til leje. Kontor, butik, lager og mere i hele Danmark.
               </p>
               <span className="text-green-700 font-medium text-sm group-hover:underline">
-                Se lejem&aring;l &rarr;
+                Se lejemål →
               </span>
             </Link>
 
@@ -76,10 +76,10 @@ export default async function HomePage() {
                 Salg
               </h3>
               <p className="text-gray-600 mb-4">
-                K&oslash;b erhvervsejendomme. Find den rigtige ejendom til din virksomhed.
+                Køb erhvervsejendomme. Find den rigtige ejendom til din virksomhed.
               </p>
               <span className="text-green-700 font-medium text-sm group-hover:underline">
-                Se ejendomme til salg &rarr;
+                Se ejendomme til salg →
               </span>
             </Link>
 
@@ -97,10 +97,10 @@ export default async function HomePage() {
                 Investering
               </h3>
               <p className="text-gray-600 mb-4">
-                Investeringsejendomme med attraktive afkast. Find din n&aelig;ste investering.
+                Investeringsejendomme med attraktive afkast. Find din næste investering.
               </p>
               <span className="text-green-700 font-medium text-sm group-hover:underline">
-                Se investeringer &rarr;
+                Se investeringer →
               </span>
             </Link>
           </div>
@@ -118,7 +118,7 @@ export default async function HomePage() {
               href="/soeg"
               className="text-green-700 font-medium hover:underline text-sm"
             >
-              Se alle &rarr;
+              Se alle →
             </Link>
           </div>
 
@@ -187,7 +187,7 @@ export default async function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
               </svg>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Ingen opslag endnu</h3>
-              <p className="text-gray-600 mb-6">V&aelig;r den f&oslash;rste til at oprette et opslag p&aring; platformen.</p>
+              <p className="text-gray-600 mb-6">Vær den første til at oprette et opslag på platformen.</p>
               <Link
                 href="/opret"
                 className="inline-flex items-center justify-center bg-green-700 text-white px-6 py-3 rounded-md font-medium hover:bg-green-800 transition-colors"

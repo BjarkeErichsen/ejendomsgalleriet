@@ -73,7 +73,7 @@ function LoginForm() {
               label="Adgangskode"
               type="password"
               name="password"
-              placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"
+              placeholder="Indtast adgangskode"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

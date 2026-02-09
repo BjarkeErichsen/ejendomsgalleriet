@@ -24,7 +24,7 @@ function FilterSection({ title, defaultOpen = false, children }: FilterSectionPr
         className="flex w-full items-center justify-between text-sm font-medium text-gray-900 hover:text-green-700 transition-colors"
       >
         <span>{title}</span>
-        <span className="text-lg leading-none text-gray-500">{open ? '\u2212' : '+'}</span>
+        <span className="text-lg leading-none text-gray-500">{open ? '−' : '+'}</span>
       </button>
       {open && <div className="mt-3 space-y-2">{children}</div>}
     </div>
