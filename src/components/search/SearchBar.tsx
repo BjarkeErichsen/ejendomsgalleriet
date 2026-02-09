@@ -45,7 +45,7 @@ export function SearchBar({ initialQuery = '', onSearch, className }: SearchBarP
         </div>
         <button
           type="submit"
-          className="flex items-center gap-2 bg-green-700 text-white px-8 py-4 text-lg font-medium hover:bg-green-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2"
+          className="flex items-center gap-2 bg-blue-700 text-white px-8 py-4 text-lg font-medium hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2"
         >
           <svg
             className="h-5 w-5"

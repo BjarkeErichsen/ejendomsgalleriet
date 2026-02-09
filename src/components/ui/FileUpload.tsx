@@ -66,7 +66,7 @@ export function FileUpload({
         className={cn(
           'border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors',
           isDragOver
-            ? 'border-green-500 bg-green-50'
+            ? 'border-blue-500 bg-blue-50'
             : 'border-gray-300 hover:border-gray-400'
         )}
       >
@@ -74,10 +74,10 @@ export function FileUpload({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
         <p className="text-sm text-gray-600">
-          <span className="text-green-700 font-medium">Træk filer hertil</span>
+          <span className="text-blue-700 font-medium">Træk filer hertil</span>
         </p>
         <p className="text-sm text-gray-500 mt-1">
-          eller <span className="text-green-700 underline">vælg fra enhed</span>
+          eller <span className="text-blue-700 underline">vælg fra enhed</span>
         </p>
         <input
           ref={inputRef}
@@ -93,7 +93,7 @@ export function FileUpload({
         <div className="mt-2 space-y-1">
           {fileNames.map((name, i) => (
             <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
-              <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               {name}

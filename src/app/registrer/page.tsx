@@ -114,7 +114,7 @@ export default function RegisterPage() {
 
           <p className="mt-6 text-sm text-center text-gray-500">
             Har du allerede en konto?{' '}
-            <Link href="/login" className="text-green-700 font-medium hover:underline">
+            <Link href="/login" className="text-blue-700 font-medium hover:underline">
               Log ind
             </Link>
           </p>

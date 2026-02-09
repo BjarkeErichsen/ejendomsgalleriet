@@ -11,7 +11,7 @@ import {
 } from '@/lib/utils'
 
 const transactionBadgeStyles: Record<string, string> = {
-  leje: 'bg-green-100 text-green-800',
+  leje: 'bg-blue-100 text-blue-800',
   salg: 'bg-blue-100 text-blue-800',
   investering: 'bg-orange-100 text-orange-800',
 }
@@ -76,7 +76,7 @@ export function PropertyCard({ listing, className }: PropertyCardProps) {
       {/* Content */}
       <div className="p-4 space-y-2">
         {/* Address */}
-        <h3 className="text-sm font-semibold text-gray-900 line-clamp-1 group-hover:text-green-700 transition-colors">
+        <h3 className="text-sm font-semibold text-gray-900 line-clamp-1 group-hover:text-blue-700 transition-colors">
           {address}
         </h3>
 

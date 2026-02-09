@@ -21,7 +21,7 @@ function FilterSection({ title, defaultOpen = false, children }: FilterSectionPr
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between text-sm font-medium text-gray-900 hover:text-green-700 transition-colors"
+        className="flex w-full items-center justify-between text-sm font-medium text-gray-900 hover:text-blue-700 transition-colors"
       >
         <span>{title}</span>
         <span className="text-lg leading-none text-gray-500">{open ? '−' : '+'}</span>
@@ -60,7 +60,7 @@ function CheckboxGroup({ options, selected, onChange }: CheckboxGroupProps) {
             type="checkbox"
             checked={selected.includes(option.value)}
             onChange={() => toggle(option.value)}
-            className="h-4 w-4 rounded border-gray-300 text-green-700 focus:ring-green-700"
+            className="h-4 w-4 rounded border-gray-300 text-blue-700 focus:ring-blue-700"
           />
           <span>{option.label}</span>
         </label>
@@ -182,7 +182,7 @@ export function FilterPanel({ className }: FilterPanelProps) {
           <button
             type="button"
             onClick={resetFilters}
-            className="w-full text-center text-sm text-gray-500 hover:text-green-700 transition-colors py-1"
+            className="w-full text-center text-sm text-gray-500 hover:text-blue-700 transition-colors py-1"
           >
             Ryd filter
           </button>

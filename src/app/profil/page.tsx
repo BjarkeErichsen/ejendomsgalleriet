@@ -58,7 +58,7 @@ export default function ProfilePage() {
   if (authLoading || loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" />
       </div>
     )
   }
@@ -79,7 +79,7 @@ export default function ProfilePage() {
         <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700">{error}</div>
       )}
       {success && (
-        <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-md text-sm text-green-700">
+        <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-md text-sm text-blue-700">
           Profil opdateret!
         </div>
       )}

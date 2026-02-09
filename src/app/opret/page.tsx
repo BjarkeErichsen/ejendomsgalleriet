@@ -195,7 +195,7 @@ export default function OpretPage() {
     } catch (err: unknown) { setError(err instanceof Error ? err.message : 'Der opstod en fejl') } finally { setSaving(false) }
   }
 
-  if (authLoading) return <div className="flex items-center justify-center min-h-[60vh]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" /></div>
+  if (authLoading) return <div className="flex items-center justify-center min-h-[60vh]"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" /></div>
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -213,7 +213,7 @@ export default function OpretPage() {
         <div className="hidden lg:block w-64 shrink-0">
           <div className="sticky top-24 space-y-1">
             {STEPS.map((step, idx) => (
-              <button key={step.num} onClick={() => setCurrentStep(idx)} className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-colors text-left', currentStep === idx ? 'bg-green-50 text-green-700 font-medium' : 'text-gray-600 hover:bg-gray-50')}>
+              <button key={step.num} onClick={() => setCurrentStep(idx)} className={cn('w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-colors text-left', currentStep === idx ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-600 hover:bg-gray-50')}>
                 <span className="text-xs font-medium w-5">{step.num}</span>
                 <span>{step.label}</span>
                 {!step.required && <span className="ml-auto text-xs text-gray-400">Valgfri</span>}
@@ -240,9 +240,9 @@ export default function OpretPage() {
                   <Input label="By" placeholder="F.eks. København" value={formData.address_city} onChange={(e) => updateField('address_city', e.target.value)} required />
                 </div>
                 {formData.address_region && (
-                  <div className="flex items-center gap-2 px-3 py-2 bg-green-50 rounded-md border border-green-200">
-                    <svg className="w-4 h-4 text-green-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                    <span className="text-sm text-green-800">Region: <strong>{getRegionLabel(formData.address_region)}</strong></span>
+                  <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 rounded-md border border-blue-200">
+                    <svg className="w-4 h-4 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                    <span className="text-sm text-blue-800">Region: <strong>{getRegionLabel(formData.address_region)}</strong></span>
                   </div>
                 )}
               </div>
@@ -254,7 +254,7 @@ export default function OpretPage() {
                 <h2 className="text-xl font-semibold text-gray-900">Primær anvendelse</h2>
                 <div className="flex flex-wrap gap-3">
                   {PRIMARY_USAGE_TYPES.map((type) => (
-                    <button key={type.value} onClick={() => updateField('primary_usage', type.value)} className={cn('px-4 py-2 rounded-full text-sm font-medium border transition-colors', formData.primary_usage === type.value ? 'bg-green-700 text-white border-green-700' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400')}>{type.label}</button>
+                    <button key={type.value} onClick={() => updateField('primary_usage', type.value)} className={cn('px-4 py-2 rounded-full text-sm font-medium border transition-colors', formData.primary_usage === type.value ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400')}>{type.label}</button>
                   ))}
                 </div>
               </div>
@@ -266,7 +266,7 @@ export default function OpretPage() {
                 <h2 className="text-xl font-semibold text-gray-900">Transaktionstype</h2>
                 <div className="flex gap-3">
                   {(['leje', 'salg', 'investering'] as const).map((type) => (
-                    <button key={type} onClick={() => updateField('transaction_type', type)} className={cn('px-6 py-2.5 rounded-md text-sm font-medium transition-colors', formData.transaction_type === type ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')}>
+                    <button key={type} onClick={() => updateField('transaction_type', type)} className={cn('px-6 py-2.5 rounded-md text-sm font-medium transition-colors', formData.transaction_type === type ? 'bg-blue-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')}>
                       {type === 'leje' ? 'Leje' : type === 'salg' ? 'Salg' : 'Investering'}
                     </button>
                   ))}
@@ -355,12 +355,12 @@ export default function OpretPage() {
                       {photos.map((file, i) => (
                         <div key={`${file.name}-${file.size}-${i}`} draggable onDragStart={() => handleDragStart(i)} onDragOver={(e) => handleDragOver(e, i)} onDrop={() => handleDrop(i)} onDragEnd={handleDragEnd}
                           className={cn('relative group aspect-square rounded-lg overflow-hidden border-2 cursor-grab active:cursor-grabbing transition-all',
-                            i === 0 ? 'border-green-500 ring-2 ring-green-200' : 'border-gray-200',
+                            i === 0 ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200',
                             dragOverIndex === i && dragIndex !== i ? 'border-blue-400 scale-105' : '',
                             dragIndex === i ? 'opacity-50' : '')}>
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={URL.createObjectURL(file)} alt={`Billede ${i + 1}`} className="w-full h-full object-cover" />
-                          {i === 0 && <div className="absolute top-1 left-1 bg-green-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">FORSIDE</div>}
+                          {i === 0 && <div className="absolute top-1 left-1 bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">FORSIDE</div>}
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                           <button type="button" onClick={(e) => { e.stopPropagation(); setPhotos(prev => prev.filter((_, idx) => idx !== i)) }}
                             className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
@@ -403,8 +403,8 @@ export default function OpretPage() {
                   <p className="text-sm font-medium text-gray-700 mb-3">Faciliteter</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {FACILITIES.map((fac) => (
-                      <button key={fac.value} onClick={() => toggleFacility(fac.value)} className={cn('flex items-center gap-2 px-3 py-2.5 rounded-md text-sm border transition-colors text-left', formData.facilities.includes(fac.value) ? 'bg-green-50 border-green-300 text-green-800' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50')}>
-                        <span className={cn('w-4 h-4 rounded border flex items-center justify-center shrink-0', formData.facilities.includes(fac.value) ? 'bg-green-700 border-green-700' : 'border-gray-300')}>
+                      <button key={fac.value} onClick={() => toggleFacility(fac.value)} className={cn('flex items-center gap-2 px-3 py-2.5 rounded-md text-sm border transition-colors text-left', formData.facilities.includes(fac.value) ? 'bg-blue-50 border-blue-300 text-blue-800' : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50')}>
+                        <span className={cn('w-4 h-4 rounded border flex items-center justify-center shrink-0', formData.facilities.includes(fac.value) ? 'bg-blue-700 border-blue-700' : 'border-gray-300')}>
                           {formData.facilities.includes(fac.value) && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                         </span>
                         {fac.label}
@@ -415,7 +415,7 @@ export default function OpretPage() {
                 <Input label="Overskrift" placeholder="Titel" value={formData.title} onChange={(e) => updateField('title', e.target.value)} />
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Beskrivelse</label>
-                  <textarea value={formData.description} onChange={(e) => updateField('description', e.target.value)} rows={6} maxLength={2000} className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-green-700 focus:outline-none focus:ring-1 focus:ring-green-700" placeholder="Beskriv lokaletype og område så specifikt som muligt" />
+                  <textarea value={formData.description} onChange={(e) => updateField('description', e.target.value)} rows={6} maxLength={2000} className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700" placeholder="Beskriv lokaletype og område så specifikt som muligt" />
                   <p className="text-xs text-gray-400 mt-1 text-right">{formData.description.length}/2000 tegn</p>
                 </div>
                 <div>
@@ -429,7 +429,7 @@ export default function OpretPage() {
                     ))}
                   </div>
                   <label className="flex items-center gap-2 mt-3 text-sm text-gray-600">
-                    <input type="checkbox" checked={formData.is_listed_building} onChange={(e) => updateField('is_listed_building', e.target.checked)} className="rounded border-gray-300 text-green-700 focus:ring-green-700" />
+                    <input type="checkbox" checked={formData.is_listed_building} onChange={(e) => updateField('is_listed_building', e.target.checked)} className="rounded border-gray-300 text-blue-700 focus:ring-blue-700" />
                     Ingen energimærke / Fredet ejendom
                   </label>
                 </div>
@@ -449,8 +449,8 @@ export default function OpretPage() {
                   <div><label className="block text-sm font-medium text-gray-700 mb-1">Uopsigelighed</label><div className="flex gap-2"><Select options={Array.from({ length: 13 }, (_, i) => ({ value: String(i), label: `${i} mdr.` }))} value={formData.non_cancellation_months} onChange={(e) => updateField('non_cancellation_months', e.target.value)} /><Select options={Array.from({ length: 11 }, (_, i) => ({ value: String(i), label: `${i} år` }))} value={formData.non_cancellation_years} onChange={(e) => updateField('non_cancellation_years', e.target.value)} /></div></div>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
-                  <div><p className="text-sm font-medium text-gray-700 mb-2">Fremlejeret</p><div className="flex gap-4"><label className="flex items-center gap-2 text-sm"><input type="radio" name="sublease" checked={formData.sublease_right === true} onChange={() => updateField('sublease_right', true)} className="text-green-700 focus:ring-green-700" /> Ja</label><label className="flex items-center gap-2 text-sm"><input type="radio" name="sublease" checked={formData.sublease_right === false} onChange={() => updateField('sublease_right', false)} className="text-green-700 focus:ring-green-700" /> Nej</label></div></div>
-                  <div><p className="text-sm font-medium text-gray-700 mb-2">Afståelsesret</p><div className="flex gap-4"><label className="flex items-center gap-2 text-sm"><input type="radio" name="transfer" checked={formData.transfer_right === true} onChange={() => updateField('transfer_right', true)} className="text-green-700 focus:ring-green-700" /> Ja</label><label className="flex items-center gap-2 text-sm"><input type="radio" name="transfer" checked={formData.transfer_right === false} onChange={() => updateField('transfer_right', false)} className="text-green-700 focus:ring-green-700" /> Nej</label></div></div>
+                  <div><p className="text-sm font-medium text-gray-700 mb-2">Fremlejeret</p><div className="flex gap-4"><label className="flex items-center gap-2 text-sm"><input type="radio" name="sublease" checked={formData.sublease_right === true} onChange={() => updateField('sublease_right', true)} className="text-blue-700 focus:ring-blue-700" /> Ja</label><label className="flex items-center gap-2 text-sm"><input type="radio" name="sublease" checked={formData.sublease_right === false} onChange={() => updateField('sublease_right', false)} className="text-blue-700 focus:ring-blue-700" /> Nej</label></div></div>
+                  <div><p className="text-sm font-medium text-gray-700 mb-2">Afståelsesret</p><div className="flex gap-4"><label className="flex items-center gap-2 text-sm"><input type="radio" name="transfer" checked={formData.transfer_right === true} onChange={() => updateField('transfer_right', true)} className="text-blue-700 focus:ring-blue-700" /> Ja</label><label className="flex items-center gap-2 text-sm"><input type="radio" name="transfer" checked={formData.transfer_right === false} onChange={() => updateField('transfer_right', false)} className="text-blue-700 focus:ring-blue-700" /> Nej</label></div></div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <Select label="Lejeregulering" options={[{ value: 'Efter aftale', label: 'Efter aftale' }, { value: 'Nettoprisindeks', label: 'Nettoprisindeks' }, { value: 'Fast procent', label: 'Fast procent' }]} value={formData.rent_adjustment} onChange={(e) => updateField('rent_adjustment', e.target.value)} />
@@ -458,7 +458,7 @@ export default function OpretPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Vedligeholdelse</label>
-                  <textarea value={formData.maintenance_note} onChange={(e) => updateField('maintenance_note', e.target.value)} maxLength={200} rows={3} className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-green-700 focus:outline-none focus:ring-1 focus:ring-green-700" />
+                  <textarea value={formData.maintenance_note} onChange={(e) => updateField('maintenance_note', e.target.value)} maxLength={200} rows={3} className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm text-gray-900 focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700" />
                   <p className="text-xs text-gray-400 mt-1 text-right">{formData.maintenance_note.length}/200 tegn</p>
                 </div>
               </div>

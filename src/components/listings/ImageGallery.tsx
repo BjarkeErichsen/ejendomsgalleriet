@@ -163,7 +163,7 @@ export function ImageGallery({ images, className }: ImageGalleryProps) {
                 className={cn(
                   'relative flex-shrink-0 h-16 w-24 overflow-hidden rounded-md border-2 transition-colors',
                   index === activeIndex
-                    ? 'border-green-700'
+                    ? 'border-blue-700'
                     : 'border-transparent hover:border-gray-300'
                 )}
               >

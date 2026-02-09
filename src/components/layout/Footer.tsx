@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-green-600 rounded-md flex items-center justify-center">
+              <div className="w-8 h-8 bg-blue-600 rounded-md flex items-center justify-center">
                 <span className="text-white font-bold text-sm">EG</span>
               </div>
               <span className="text-lg font-bold text-white">Ejendomsgalleriet</span>

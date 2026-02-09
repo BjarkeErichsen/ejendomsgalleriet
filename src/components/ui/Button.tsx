@@ -15,9 +15,9 @@ interface ButtonProps {
 }
 
 const variants = {
-  primary: 'bg-green-700 text-white hover:bg-green-800 focus:ring-green-700',
+  primary: 'bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-700',
   secondary: 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400',
-  outline: 'border border-green-700 text-green-700 hover:bg-green-50 focus:ring-green-700',
+  outline: 'border border-blue-700 text-blue-700 hover:bg-blue-50 focus:ring-blue-700',
   ghost: 'text-gray-600 hover:bg-gray-100 focus:ring-gray-400',
 }
 

@@ -89,7 +89,7 @@ export default function EditListingPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" />
       </div>
     )
   }
@@ -151,7 +151,7 @@ export default function EditListingPage() {
             <Input label="By" value={listing.address_city} onChange={(e) => updateListing({ address_city: e.target.value })} />
           </div>
           {listing.region && (
-            <p className="text-sm text-green-700">Region: <strong>{getRegionLabel(listing.region)}</strong></p>
+            <p className="text-sm text-blue-700">Region: <strong>{getRegionLabel(listing.region)}</strong></p>
           )}
         </div>
 
@@ -164,7 +164,7 @@ export default function EditListingPage() {
               value={listing.description}
               onChange={(e) => updateListing({ description: e.target.value })}
               rows={5}
-              className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm focus:border-green-700 focus:outline-none focus:ring-1 focus:ring-green-700"
+              className="w-full rounded-md border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700"
             />
           </div>
           <div className="grid grid-cols-2 gap-4">

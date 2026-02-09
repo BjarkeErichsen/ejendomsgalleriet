@@ -128,7 +128,7 @@ function SearchPageContent() {
                   onClick={() => setViewMode('list')}
                   className={`p-2 transition-colors ${
                     viewMode === 'list'
-                      ? 'bg-green-700 text-white'
+                      ? 'bg-blue-700 text-white'
                       : 'bg-white text-gray-600 hover:bg-gray-50'
                   }`}
                   aria-label="Listevisning"
@@ -142,7 +142,7 @@ function SearchPageContent() {
                   onClick={() => setViewMode('map')}
                   className={`p-2 transition-colors ${
                     viewMode === 'map'
-                      ? 'bg-green-700 text-white'
+                      ? 'bg-blue-700 text-white'
                       : 'bg-white text-gray-600 hover:bg-gray-50'
                   }`}
                   aria-label="Kortvisning"
@@ -202,7 +202,7 @@ function SearchPageContent() {
                     onClick={() => handlePageChange(page)}
                     className={`w-9 h-9 rounded-md text-sm font-medium transition-colors ${
                       page === currentPage
-                        ? 'bg-green-700 text-white'
+                        ? 'bg-blue-700 text-white'
                         : 'text-gray-600 hover:bg-gray-100'
                     }`}
                   >
@@ -232,7 +232,7 @@ export default function SearchPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" />
         </div>
       }
     >

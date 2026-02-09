@@ -19,7 +19,7 @@ import {
 } from 'recharts'
 import type { Listing } from '@/lib/types'
 
-const CHART_COLORS = ['#2E7D32', '#388E3C', '#43A047', '#4CAF50', '#66BB6A', '#81C784', '#A5D6A7', '#C8E6C9', '#1B5E20', '#558B2F', '#9E9D24', '#F9A825', '#EF6C00']
+const CHART_COLORS = ['#1565C0', '#1976D2', '#1E88E5', '#2196F3', '#42A5F5', '#64B5F6', '#90CAF9', '#BBDEFB', '#0D47A1', '#1565C0', '#9E9D24', '#F9A825', '#EF6C00']
 
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -50,7 +50,7 @@ export default function StatistikPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" />
       </div>
     )
   }
@@ -136,7 +136,7 @@ export default function StatistikPage() {
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-4">
           <p className="text-sm text-gray-500">Til leje</p>
-          <p className="text-2xl font-bold text-green-700">{listings.filter(l => l.transaction_type === 'leje').length}</p>
+          <p className="text-2xl font-bold text-blue-700">{listings.filter(l => l.transaction_type === 'leje').length}</p>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-4">
           <p className="text-sm text-gray-500">Til salg</p>
@@ -156,7 +156,7 @@ export default function StatistikPage() {
               <XAxis dataKey="name" tick={{ fontSize: 12 }} angle={-20} textAnchor="end" height={60} />
               <YAxis tick={{ fontSize: 12 }} />
               <Tooltip />
-              <Bar dataKey="count" fill="#2E7D32" radius={[4, 4, 0, 0]} name="Antal" />
+              <Bar dataKey="count" fill="#1565C0" radius={[4, 4, 0, 0]} name="Antal" />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -173,7 +173,7 @@ export default function StatistikPage() {
                 label={({ name, value }) => `${name} (${value})`}
               >
                 {byTransaction.map((_, i) => (
-                  <Cell key={i} fill={['#2E7D32', '#1565C0', '#EF6C00'][i % 3]} />
+                  <Cell key={i} fill={['#1565C0', '#1565C0', '#EF6C00'][i % 3]} />
                 ))}
               </Pie>
               <Tooltip />
@@ -188,7 +188,7 @@ export default function StatistikPage() {
               <XAxis type="number" tick={{ fontSize: 12 }} />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={120} />
               <Tooltip />
-              <Bar dataKey="count" fill="#388E3C" radius={[0, 4, 4, 0]} name="Antal" />
+              <Bar dataKey="count" fill="#1976D2" radius={[0, 4, 4, 0]} name="Antal" />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -201,7 +201,7 @@ export default function StatistikPage() {
                 <XAxis dataKey="name" tick={{ fontSize: 12 }} angle={-20} textAnchor="end" height={60} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip formatter={(value) => [`${value} DKK/m²`, 'Gns. leje']} />
-                <Bar dataKey="avg" fill="#43A047" radius={[4, 4, 0, 0]} name="DKK/m²" />
+                <Bar dataKey="avg" fill="#1E88E5" radius={[4, 4, 0, 0]} name="DKK/m²" />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
@@ -215,7 +215,7 @@ export default function StatistikPage() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />
-                <Line type="monotone" dataKey="count" stroke="#2E7D32" strokeWidth={2} dot={{ fill: '#2E7D32' }} name="Antal" />
+                <Line type="monotone" dataKey="count" stroke="#1565C0" strokeWidth={2} dot={{ fill: '#1565C0' }} name="Antal" />
               </LineChart>
             </ResponsiveContainer>
           </ChartCard>

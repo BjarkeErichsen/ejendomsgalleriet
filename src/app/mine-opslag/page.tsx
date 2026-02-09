@@ -41,7 +41,7 @@ export default function MineOpslagPage() {
   if (authLoading || loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" />
       </div>
     )
   }
@@ -90,7 +90,7 @@ export default function MineOpslagPage() {
                         {listing.address_street}, {listing.address_postal_code} {listing.address_city}
                       </p>
                     </div>
-                    <Badge variant={listing.status === 'published' ? 'green' : 'default'}>
+                    <Badge variant={listing.status === 'published' ? 'blue' : 'default'}>
                       {listing.status === 'published' ? 'Publiceret' : 'Kladde'}
                     </Badge>
                   </div>
@@ -106,7 +106,7 @@ export default function MineOpslagPage() {
                   <div className="flex items-center gap-3 mt-3">
                     <Link
                       href={`/ejendom/${listing.id}`}
-                      className="text-sm text-green-700 hover:underline font-medium"
+                      className="text-sm text-blue-700 hover:underline font-medium"
                     >
                       Se opslag
                     </Link>

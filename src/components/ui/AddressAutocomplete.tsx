@@ -152,12 +152,12 @@ export function AddressAutocomplete({
           onFocus={() => { if (suggestions.length > 0) setIsOpen(true) }}
           placeholder={placeholder}
           required={required}
-          className="w-full rounded-md border border-gray-300 pl-9 pr-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-green-700 focus:outline-none focus:ring-1 focus:ring-green-700"
+          className="w-full rounded-md border border-gray-300 pl-9 pr-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700"
           autoComplete="off"
         />
         {loading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-green-700" />
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-blue-700" />
           </div>
         )}
       </div>
@@ -172,7 +172,7 @@ export function AddressAutocomplete({
               className={cn(
                 'w-full text-left px-3 py-2.5 text-sm transition-colors flex items-start gap-2',
                 index === highlightIndex
-                  ? 'bg-green-50 text-green-900'
+                  ? 'bg-blue-50 text-blue-900'
                   : 'text-gray-700 hover:bg-gray-50'
               )}
               onClick={() => handleSelect(suggestion)}

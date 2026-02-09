@@ -85,7 +85,7 @@ function LoginForm() {
 
           <p className="mt-6 text-sm text-center text-gray-500">
             Har du ikke en konto?{' '}
-            <Link href="/registrer" className="text-green-700 font-medium hover:underline">
+            <Link href="/registrer" className="text-blue-700 font-medium hover:underline">
               Opret konto
             </Link>
           </p>
@@ -100,7 +100,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-[70vh] flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-700" />
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700" />
         </div>
       }
     >

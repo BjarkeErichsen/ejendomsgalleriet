@@ -29,7 +29,7 @@ export function RangeSlider({
             value={minValue}
             onChange={(e) => onChange(e.target.value, String(maxValue))}
             placeholder="Min"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-green-700 focus:outline-none focus:ring-1 focus:ring-green-700"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700"
           />
           {unit && (
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">
@@ -44,7 +44,7 @@ export function RangeSlider({
             value={maxValue}
             onChange={(e) => onChange(String(minValue), e.target.value)}
             placeholder="Max"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-green-700 focus:outline-none focus:ring-1 focus:ring-green-700"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700"
           />
           {unit && (
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">

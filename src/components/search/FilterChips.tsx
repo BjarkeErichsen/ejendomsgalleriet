@@ -11,12 +11,12 @@ interface ChipProps {
 
 function Chip({ label, onRemove }: ChipProps) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-green-50 border border-green-200 px-3 py-1 text-sm text-green-800">
+    <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-sm text-blue-800">
       <span>{label}</span>
       <button
         type="button"
         onClick={onRemove}
-        className="ml-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-green-200 transition-colors"
+        className="ml-0.5 inline-flex h-4 w-4 items-center justify-center rounded-full hover:bg-blue-200 transition-colors"
         aria-label={`Fjern ${label}`}
       >
         <svg
@@ -139,7 +139,7 @@ export function FilterChips({ className }: FilterChipsProps) {
         <button
           type="button"
           onClick={resetFilters}
-          className="text-sm text-gray-500 hover:text-green-700 transition-colors ml-1"
+          className="text-sm text-gray-500 hover:text-blue-700 transition-colors ml-1"
         >
           Ryd alle
         </button>

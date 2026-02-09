@@ -16,7 +16,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-green-700 rounded-md flex items-center justify-center">
+            <div className="w-8 h-8 bg-blue-700 rounded-md flex items-center justify-center">
               <span className="text-white font-bold text-sm">EG</span>
             </div>
             <span className="text-lg font-bold text-gray-900 hidden sm:block">
@@ -28,25 +28,25 @@ export function Navbar() {
           <nav className="hidden md:flex items-center gap-1">
             <Link
               href="/soeg?type=leje"
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-green-700 rounded-md hover:bg-gray-50 transition-colors"
+              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 rounded-md hover:bg-gray-50 transition-colors"
             >
               Leje
             </Link>
             <Link
               href="/soeg?type=salg"
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-green-700 rounded-md hover:bg-gray-50 transition-colors"
+              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 rounded-md hover:bg-gray-50 transition-colors"
             >
               Salg
             </Link>
             <Link
               href="/soeg?type=investering"
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-green-700 rounded-md hover:bg-gray-50 transition-colors"
+              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 rounded-md hover:bg-gray-50 transition-colors"
             >
               Investering
             </Link>
             <Link
               href="/statistik"
-              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-green-700 rounded-md hover:bg-gray-50 transition-colors"
+              className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 rounded-md hover:bg-gray-50 transition-colors"
             >
               Statistik
             </Link>
@@ -62,7 +62,7 @@ export function Navbar() {
                   Opret annonce
                 </Button>
                 <div className="relative group">
-                  <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-green-700 rounded-md hover:bg-gray-50">
+                  <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 rounded-md hover:bg-gray-50">
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
@@ -130,7 +130,7 @@ export function Navbar() {
           <hr className="my-2" />
           {user ? (
             <>
-              <Link href="/opret" className="block px-3 py-2 text-sm font-medium text-green-700 hover:bg-gray-50 rounded-md" onClick={() => setMobileOpen(false)}>
+              <Link href="/opret" className="block px-3 py-2 text-sm font-medium text-blue-700 hover:bg-gray-50 rounded-md" onClick={() => setMobileOpen(false)}>
                 Opret annonce
               </Link>
               <Link href="/mine-opslag" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md" onClick={() => setMobileOpen(false)}>
@@ -151,7 +151,7 @@ export function Navbar() {
               <Link href="/login" className="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md" onClick={() => setMobileOpen(false)}>
                 Log ind
               </Link>
-              <Link href="/registrer" className="block px-3 py-2 text-sm font-medium text-green-700 hover:bg-gray-50 rounded-md" onClick={() => setMobileOpen(false)}>
+              <Link href="/registrer" className="block px-3 py-2 text-sm font-medium text-blue-700 hover:bg-gray-50 rounded-md" onClick={() => setMobileOpen(false)}>
                 Opret konto
               </Link>
             </>

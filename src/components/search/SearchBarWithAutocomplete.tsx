@@ -197,14 +197,14 @@ export function SearchBarWithAutocomplete({
             />
             {loading && (
               <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-green-700" />
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-blue-700" />
               </div>
             )}
           </div>
           <button
             type="submit"
             className={cn(
-              'flex items-center gap-2 bg-green-700 text-white font-medium hover:bg-green-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2',
+              'flex items-center gap-2 bg-blue-700 text-white font-medium hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2',
               hero ? 'px-8 py-4 text-lg' : 'px-6 py-3 text-base'
             )}
           >
@@ -239,7 +239,7 @@ export function SearchBarWithAutocomplete({
                 className={cn(
                   'w-full text-left px-4 py-3 text-sm transition-colors flex items-start gap-3 border-b border-gray-50 last:border-0',
                   index === highlightIndex
-                    ? 'bg-green-50 text-green-900'
+                    ? 'bg-blue-50 text-blue-900'
                     : 'text-gray-700 hover:bg-gray-50'
                 )}
                 onClick={() => handleSelect(suggestion)}
